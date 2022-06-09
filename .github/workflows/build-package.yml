@@ -7,15 +7,15 @@ on:
       branch:
         description: "SDK Platform Source Branch Name"
         required: true
-        default: "android-platform-12.1.0_r2"
+        default: "android-t-beta-3"
       apiLevel:
         description: "API Level"
         required: true
-        default: "32"
+        default: "33"
       versionName:
         description: "Android Version Name"
         required: false
-        default: "12L"
+        default: "13"
 
 jobs:
   build-sources-package:
@@ -33,9 +33,9 @@ jobs:
         run: |
           branchName=${{ github.event.inputs.branch }}
 
-          git clone https://github.com/aosp-mirror/platform_frameworks_base.git --branch $branchName --depth 1 frameworks/base
+          git clone https://android.googlesource.com/platform/frameworks/base.git --branch $branchName --depth 1 frameworks/base
           git clone https://android.googlesource.com/platform/libcore --branch $branchName --depth 1
-          git clone https://github.com/aosp-mirror/platform_development.git --branch $branchName --depth 1 development
+          git clone https://android.googlesource.com/platform/development.git --branch $branchName --depth 1 development
 
       - name: Create a basic source.properties file
         run: echo -e "Pkg.UserSrc=false\nPkg.Revision=0\nAndroidVersion.ApiLevel=${{ github.event.inputs.apiLevel }}" > source.properties
